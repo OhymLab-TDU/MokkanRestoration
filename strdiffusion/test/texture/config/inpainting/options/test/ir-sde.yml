@@ -1,0 +1,50 @@
+#### general settings
+name: ir-sde
+suffix: ~  # add suffix to saved images
+model: denoising
+distortion: derain
+gpu_ids: [0]
+
+sde:
+  max_sigma: 30
+  T: 400
+  schedule: cosine
+  eps: 0.005
+
+degradation:
+  mask_root: /home/shiono/StrDiffusion/datasets/MokkanMask/test_new
+  
+  
+#### datasets
+datasets:
+  test1:
+    name: Val_Dataset
+    mode: GT
+    dataroot_GT: /home/shiono/StrDiffusion/datasets/mokkan_characters/test_256
+
+#### network structures
+network_G:
+  which_model_G: ConditionalUNet
+  setting:
+    in_nc: 3
+    out_nc: 3
+    nf: 64
+    depth: 4
+    
+network_Gs:
+  which_model_G: ConditionalUNets
+  setting:
+    in_nc: 1
+    out_nc: 1
+    nf: 64
+    depth: 4
+
+
+path:
+  pretrain_model_G: /home/shiono/StrDiffusion/log/ir-sde_archived_240812-150128)texture1120)/models/new_G.pth
+  #your path of texture.pth
+  pretrain_model_Gs: /home/shiono/StrDiffusion/log/ir-sde_archived_240624-133500(structure1120)/models/new_G.pth
+  #your path of structure.pth
+  pretrain_model_D: /home/shiono/StrDiffusion/log/ir-sde/models/new_D.pth
+  #your path of discriminator.pth
+  results_root: /home/shiono/StrDiffusion/result_20250126csv
